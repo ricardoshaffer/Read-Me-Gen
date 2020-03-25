@@ -1,8 +1,22 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
 const util = require("util");
+const axios = require("axios");
+
+inquirer
+    .prompt({
+        message: "What's your GitHub User Name?",
+        name: "username"
+    })
+    .then( ({ username })=> {
+        const queryUrl = `https://api.github.com/users/${username}?`
+
+    axios
+        get(queryUrl).then(resp =>{ console.log(resp.data)});
 
 const writeFileAsync = util.promisify(fs.writeFile);
+
+    })
 
 function promptUser() {
   return inquirer.prompt([
@@ -15,7 +29,7 @@ function promptUser() {
       type: "input",
       name: "location",
       message: "Where are you from?"
-    },
+    }, 
     {
       type: "input",
       name: "hobby",
