@@ -22,7 +22,7 @@
 
     var github = require('octonode');
     var client = github.client();
-    var ghuser = client.user();
+    //var ghuser = client.user();
 
     client.get('/users/ricardoshaffer', {}, function (err, status, body) {
         //err(err => {console.log(`dang! user wasn't found`)});

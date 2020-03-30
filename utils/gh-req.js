@@ -32,7 +32,7 @@ module.exports = api;
 //     }
 // }
 
-module.exports = api;
+//module.exports = api;
 
 //getUser();
 //console.log(api);

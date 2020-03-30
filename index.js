@@ -18,6 +18,11 @@ const questions = [
       name: "project",
       message: "what's the name of your project?"
     }, 
+    { 
+        type: "input",
+        name: "define",
+        message: "what's your project about?"
+      },
     {
       type: "input",
       name: "installation",
@@ -25,18 +30,19 @@ const questions = [
     },
     {
       type: "input",
-      name: "food",
-      message: "What is your favorite food?"
+      name: "usage",
+      message: "What's the general useage guidelines?"
+    },
+    {
+      type: "list",
+      name: "license",
+      message: "What type of license would you like to select for your project?",
+      choices: ["Apache", "GNU", "MIT", "None"]
     },
     {
       type: "input",
-      name: "github",
-      message: "Enter your GitHub Username"
-    },
-    {
-      type: "input",
-      name: "linkedin",
-      message: "Enter your LinkedIn URL."
+      name: "tests",
+      message: "What command is used to run any tests?"  
     }
 ];
     function writeToFile(fileName, data){
@@ -45,7 +51,6 @@ const questions = [
 
 function init() {
     inquirer.prompt(questions).then((inquirerResponses) => {
-        console.log("searching...");
         
         api
             .client(inquirerResponses.githubName)
