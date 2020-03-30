@@ -1,4 +1,4 @@
-function generateMarkdown(data) {
+function generateMarkdown(githubName, title) {
   return `
 # ${data.title}
 

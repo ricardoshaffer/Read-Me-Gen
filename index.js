@@ -1,39 +1,27 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
-const util = require("util");
-const axios = require("axios");
+const path = require("path");
+//const util = require("util");
+//const axios = require("axios");
+const api = require("./utils/gh-req");
+const generateMarkdown = require("./utils/generateMarkdown");
 
-inquirer
-    .prompt({
-        message: "What's your GitHub User Name?",
-        name: "username"
-    })
-    .then( ({ username })=> {
-        const queryUrl = `https://api.github.com/users/${username}?`
 
-    axios
-        get(queryUrl).then(resp =>{ console.log(resp.data)});
-
-const writeFileAsync = util.promisify(fs.writeFile);
-
-    })
-
-function promptUser() {
-  return inquirer.prompt([
+const questions = [
     {
       type: "input",
-      name: "name",
-      message: "What is your name?"
+      name: "githubName",
+      message: "What is your GitHub username?"
     },
     {
       type: "input",
-      name: "location",
-      message: "Where are you from?"
+      name: "project",
+      message: "what's the name of your project?"
     }, 
     {
       type: "input",
-      name: "hobby",
-      message: "What is your favorite hobby?"
+      name: "installation",
+      message: "how do you install your project?"
     },
     {
       type: "input",
@@ -50,44 +38,23 @@ function promptUser() {
       name: "linkedin",
       message: "Enter your LinkedIn URL."
     }
-  ]);
-}
+];
+    function writeToFile(fileName, data){
+        return fs.writeFileSync(path.join(process.cwd(), fileName), data);
+    }
 
-function generateHTML(answers) {
-  return `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <title>Document</title>
-</head>
-<body>
-  <div class="jumbotron jumbotron-fluid">
-  <div class="container">
-    <h1 class="display-4">Hi! My name is ${answers.name}</h1>
-    <p class="lead">I am from ${answers.location}.</p>
-    <h3>Example heading <span class="badge badge-secondary">Contact Me</span></h3>
-    <ul class="list-group">
-      <li class="list-group-item">My GitHub username is ${answers.github}</li>
-      <li class="list-group-item">LinkedIn: ${answers.linkedin}</li>
-    </ul>
-  </div>
-</div>
-</body>
-</html>`;
-}
-
-promptUser()
-  .then(function(answers) {
-    const html = generateHTML(answers);
-
-    return writeFileAsync("index.html", html);
-  })
-  .then(function() {
-    console.log("Successfully wrote to index.html");
-  })
-  .catch(function(err) {
-    console.log(err);
-  });
+function init() {
+    inquirer.prompt(questions).then((inquirerResponses) => {
+        console.log("searching...");
+        
+        api
+            .client(inquirerResponses.githubName)
+            .then(({ body }) => {
+            console.log(data);
+            writeToFile("README.md", generateMarkdown({...inquirerResponses, ...body}));
+        })
+    })   
+} 
+init ();
+    
+    
