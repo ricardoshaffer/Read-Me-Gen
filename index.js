@@ -1,8 +1,6 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
 const path = require("path");
-//const util = require("util");
-//const axios = require("axios");
 const api = require("./utils/gh-req");
 const generateMarkdown = require("./utils/generateMarkdown");
 
@@ -45,18 +43,18 @@ const questions = [
       message: "What command is used to run any tests?"  
     }
 ];
-    function writeToFile(fileName, data){
-        return fs.writeFileSync(path.join(process.cwd(), fileName), data);
+    function writeToFile(mdName, data){
+        return fs.writeFileSync(path.join(process.cwd(), mdName), data);
     }
 
 function init() {
     inquirer.prompt(questions).then((inquirerResponses) => {
         
         api
-            .client(inquirerResponses.githubName)
-            .then(({ body }) => {
-            console.log(data);
-            writeToFile("README.md", generateMarkdown({...inquirerResponses, ...body}));
+            .ghUser(inquirerResponses.githubName)
+            .then(({ data }) => {
+
+            writeToFile("README.md", generateMarkdown({...inquirerResponses, ...data }));
         })
     })   
 } 

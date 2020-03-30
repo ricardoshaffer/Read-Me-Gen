@@ -4,7 +4,7 @@ function generateMarkdown(githubName, project) {
 }
 
 function sizeShield(githubName, title){
-  return `[[File Size](https://img.shields.io/github/repo-size/${githubName}/${title})]`
+  return `[![GitHub repo size](https://img.shields.io/github/repo-size/${githubName}/${title})]`
 }
 function generateMarkdown(data){
   return `
@@ -24,10 +24,9 @@ ${data.define}
 
 ## Installation
 
-
+\`\`\`
 ${data.installation}
-
-
+\`\`\`
 
 ## Usage
 
@@ -38,13 +37,15 @@ ${data.usage}
 ${data.license}
 
 ## Tests
-
+\`\`\`
 ${data.tests}
-
+\`\`\`
 ## Running
 '${data.running}'
 
 ## Author
+
+by github user : ${data.githubName}
 
 `}
 
